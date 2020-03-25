@@ -1,0 +1,3 @@
+[submodule "bio-cwl-tools"]
+	path = bio-cwl-tools
+	url = ./bio-cwl-tools

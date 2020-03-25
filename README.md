@@ -21,7 +21,7 @@ Current members are working on the following analysis steps :
 
 
 
-more on CWL at https://www.commonwl.org/
+more on CWL at https://www.commonwl.org
 
 
 

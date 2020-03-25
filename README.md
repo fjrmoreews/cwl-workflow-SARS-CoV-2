@@ -15,9 +15,10 @@ Current members are working on the following analysis steps :
 - **Variation**
 - ~~Protein~~
 
-
-
-
+   
+  
+  
+  
 
 
 

@@ -28,7 +28,9 @@ git submodule init
 
 git submodule update
 
-
+# for branch selection
+cd bio-cwl-tools
+git pull origin release
 
 ```
 

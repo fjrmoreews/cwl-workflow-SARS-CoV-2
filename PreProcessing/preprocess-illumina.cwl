@@ -4,6 +4,9 @@ class: Workflow
 requirements:
   ScatterFeatureRequirement: {}
   SubworkflowFeatureRequirement: {}
+  MultipleInputFeatureRequirement: {}
+  StepInputExpressionRequirement: {}
+  InlineJavascriptRequirement: {}
 
 inputs:
   illumina_accessions: string
@@ -28,6 +31,16 @@ steps:
       - json_report
     run: ../bio-cwl-tools/fastp/fastp.cwl
 
+  multiqc:
+    in:
+      all_fastqs: [fastp/out_fastq1, fastp/out_fastq2, fastp/json_report]
+      qc_files_array:
+        valueFrom: ${return inputs.all_fastqs.filter(function(x){return x});}
+    out:
+      - multiqc_zip
+      - multiqc_html
+    run: ../bio-cwl-tools/multiqc/multiqc.cwl
+
 outputs:
   fastq_file_1:
     type: File
@@ -48,3 +61,10 @@ outputs:
   fastp_json_report:
     type: File
     outputSource: fastp/json_report
+
+  multiqc_html:
+    type: File
+    outputSource: multiqc/multiqc_html
+  multiqc_zip:
+    type: File
+    outputSource: multiqc/multiqc_zip

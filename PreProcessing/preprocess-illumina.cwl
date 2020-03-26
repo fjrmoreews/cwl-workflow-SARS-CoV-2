@@ -58,7 +58,6 @@ outputs:
     outputSource: fastp/html_report
   fastp_json_report:
     type: File
-    outputSource: fastp/json_report
 
   multiqc_html:
     type: File

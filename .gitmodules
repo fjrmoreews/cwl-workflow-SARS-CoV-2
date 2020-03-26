@@ -1,0 +1,4 @@
+[submodule "bio-cwl-tools"]
+	path = bio-cwl-tools
+	url = https://github.com/fjrmoreews/bio-cwl-tools.git
+        #url = ./bio-cwl-tools

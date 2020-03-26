@@ -33,9 +33,7 @@ steps:
 
   multiqc:
     in:
-      all_fastqs: [fastp/out_fastq1, fastp/out_fastq2, fastp/json_report]
-      qc_files_array:
-        valueFrom: ${return inputs.all_fastqs.filter(function(x){return x});}
+      qc_files_array: fastp/json_report
     out:
       - multiqc_zip
       - multiqc_html

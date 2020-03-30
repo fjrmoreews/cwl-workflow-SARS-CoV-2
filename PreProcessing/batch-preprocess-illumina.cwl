@@ -26,6 +26,14 @@ steps:
       - unmapped_reads_sam
       - unmapped_reads_bam
     run: ./preprocess-illumina.cwl
+  samtools_merge:
+    in:
+      output_name:
+        valueFrom: "merged.bam"
+      bams: main/unmapped_reads_bam
+    out:
+      - bam_merged
+    run: ../bio-cwl-tools/samtools/samtools_merge.cwl
 
 outputs:
   fastp_html_reports:
@@ -48,3 +56,7 @@ outputs:
   unmapped_reads_bam:
     type: File[]
     outputSource: main/unmapped_reads_bam
+
+  merged_bam:
+    type: File
+    outputSource: samtools_merge/bam_merged

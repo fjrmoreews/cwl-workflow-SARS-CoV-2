@@ -61,25 +61,12 @@ steps:
       - bam
     run: ../bio-cwl-tools/samtools/samtools_view_sam2bam.cwl
 
-  rename_sam:
+  samtools_fastq:
     in:
-      srcfile: bwa_mem/reads_stdout
-      newname:
-        source: illumina_accession
-        valueFrom: $(self).sam
+     bam_sorted: samtools_view/bam
     out:
-      - outfile
-    run: ./rename.cwl
-
-  rename_bam:
-    in:
-      srcfile: samtools_view/bam
-      newname:
-        source: illumina_accession
-        valueFrom: $(self).bam
-    out:
-      - outfile
-    run: ./rename.cwl
+      - fastq
+    run: ../bio-cwl-tools/samtools/samtools_fastq.cwl
 
   rename_multiqc_html:
     in:
@@ -121,24 +108,25 @@ steps:
       - outfile
     run: ./rename.cwl
 
-outputs:
-  fastq_1:
-    type: File
-    outputSource: fetch_fastqs/fastq_file_1
-  fastq_2:
-    type: File?
-    outputSource: fetch_fastqs/fastq_file_2
+  rename_fastq:
+    in:
+      srcfile: samtools_fastq/fastq
+      newname:
+        source: illumina_accession
+        valueFrom: $(self).fastq
+    out:
+      - outfile
+    run: ./rename.cwl
 
-  fastp_1:
+outputs:
+  fastq:
     type: File
-    outputSource: fastp/out_fastq1
-  fastp_2:
-    type: File?
-    outputSource: fastp/out_fastq2
+    outputSource: rename_fastq/outfile
 
   fastp_html_report:
     type: File
     outputSource: rename_fastp_html/outfile
+
   fastp_json_report:
     type: File
     outputSource: rename_fastp_json/outfile
@@ -150,12 +138,3 @@ outputs:
   multiqc_zip:
     type: File
     outputSource: rename_multiqc_zip/outfile
-
-
-  unmapped_reads_sam:
-    type: File
-    outputSource: rename_sam/outfile
-
-  unmapped_reads_bam:
-    type: File
-    outputSource: rename_bam/outfile

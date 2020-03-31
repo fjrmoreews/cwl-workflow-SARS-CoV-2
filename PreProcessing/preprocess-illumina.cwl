@@ -113,13 +113,20 @@ steps:
       srcfile: samtools_fastq/fastq
       newname:
         source: illumina_accession
-        valueFrom: $(self).fastq
+        valueFrom: $(self)_processed.fastq
     out:
       - outfile
     run: ./rename.cwl
 
 outputs:
-  fastq:
+  original_fastq1:
+    type: File
+    outputSource: fetch_fastqs/fastq_file_1
+  original_fastq2:
+    type: File?
+    outputSource: fetch_fastqs/fastq_file_2
+
+  processed_fastq:
     type: File
     outputSource: rename_fastq/outfile
 

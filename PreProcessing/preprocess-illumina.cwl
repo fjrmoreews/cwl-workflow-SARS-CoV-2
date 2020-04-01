@@ -108,12 +108,12 @@ steps:
       - outfile
     run: ./rename.cwl
 
-  rename_fastq:
+  rename_bam:
     in:
-      srcfile: samtools_fastq/fastq
+      srcfile: samtools_view/bam
       newname:
         source: illumina_accession
-        valueFrom: $(self)_processed.fastq
+        valueFrom: $(self).bam
     out:
       - outfile
     run: ./rename.cwl
@@ -126,9 +126,9 @@ outputs:
     type: File?
     outputSource: fetch_fastqs/fastq_file_2
 
-  processed_fastq:
+  bam:
     type: File
-    outputSource: rename_fastq/outfile
+    outputSource: rename_bam/outfile
 
   fastp_html_report:
     type: File

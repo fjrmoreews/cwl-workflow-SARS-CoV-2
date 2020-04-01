@@ -25,16 +25,37 @@ steps:
       - multiqc_zip
       - original_fastq1
       - original_fastq2
-      - processed_fastq
+      - bam
     run: ./preprocess-illumina.cwl
+
+  merge_bam:
+    in:
+      output_name:
+        valueFrom: "merged.bam"
+      bams: main/bam
+    out:
+      - bam_merged
+    run: ../bio-cwl-tools/samtools/samtools_merge.cwl
+
+  samtools_fastq:
+    in:
+      bam_sorted: merge_bam/bam_merged
+    out:
+      - fastq
+    run: ../bio-cwl-tools/samtools/samtools_fastq.cwl
+
 
 outputs:
   original_fastq1:
-    type: File
+    type: File[]
     outputSource: main/original_fastq1
   original_fastq2:
-    type: File?
+    type: File[]?
     outputSource: main/original_fastq2
+
+  processed_fastq:
+    type: File
+    outputSource: samtools_fastq/fastq
 
   fastp_html_reports:
     type: File[]
@@ -49,7 +70,3 @@ outputs:
   multiqc_zips:
     type: File[]
     outputSource: main/multiqc_zip
-
-  processed_fastq:
-    type: File
-    outputSource: main/processed_fastq

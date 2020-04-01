@@ -76,7 +76,7 @@ steps:
         valueFrom: $(self)_multiqc.html
     out:
       - outfile
-    run: ./rename.cwl
+    run: ../bio-cwl-tools/util/rename.cwl
 
   rename_multiqc_zip:
     in:
@@ -86,7 +86,7 @@ steps:
         valueFrom: $(self)_multiqc.zip
     out:
       - outfile
-    run: ./rename.cwl
+    run: ../bio-cwl-tools/util/rename.cwl
 
   rename_fastp_html:
     in:
@@ -96,7 +96,7 @@ steps:
         valueFrom: $(self)_fastp.html
     out:
       - outfile
-    run: ./rename.cwl
+    run: ../bio-cwl-tools/util/rename.cwl
 
   rename_fastp_json:
     in:
@@ -106,7 +106,7 @@ steps:
         valueFrom: $(self)_fastp.json
     out:
       - outfile
-    run: ./rename.cwl
+    run: ../bio-cwl-tools/util/rename.cwl
 
   rename_bam:
     in:
@@ -116,7 +116,7 @@ steps:
         valueFrom: $(self).bam
     out:
       - outfile
-    run: ./rename.cwl
+    run: ../bio-cwl-tools/util/rename.cwl
 
 outputs:
   original_fastq1:

@@ -34,17 +34,22 @@ git submodule update
 ```
 
 ##  contribute
-Workflow dev welcome !  
+
+- Workflow & tool dev welcome !  
 Ask to join on the biohackathon slack workflow channel
 or pull request
 
 more on CWL at https://www.commonwl.org
 
+-  You can contribute as well if:
+  you can wrap a tool as a script (python bash...)
+  and/or know containers (docker...)
 
 ##  best practice
 
 - Create a branch, checkout , push your code 
-- when your workflow is almost done, refactor it as follow:
+- when your workflow is almost done, refactor it: 
+
   in the cwl workflow file, all  cwl tools should be defined as external files and called as follow:
 ```
   mytool:

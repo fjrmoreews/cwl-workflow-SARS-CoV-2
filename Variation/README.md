@@ -41,6 +41,7 @@ https://github.com/galaxyproject/tools-iuc/blob/master/tool_collections/snpeff/s
 - input_type.codon_table = "Standard"
 
 ##### OUT:
+At the beginning of the code, gbk2fa.py is executed to get output_fasta
 - snpeff_output
 - output_fasta
 

@@ -58,6 +58,8 @@ more on CWL at https://www.commonwl.org
 
 see example :  https://github.com/fjrmoreews/cwl-workflow-SARS-CoV-2/blob/preprocessing/PreProcessing/preprocess-illumina.cwl
 
+and cwl style guide : https://github.com/common-workflow-library/bio-cwl-tools#styleguide
+
  - ask for merging to master, when it's clean enought.
   
   

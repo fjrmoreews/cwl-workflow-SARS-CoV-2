@@ -70,3 +70,9 @@ outputs:
   multiqc_zips:
     type: File[]
     outputSource: main/multiqc_zip
+
+$namespaces:
+  edam: http://edamontology.org/
+
+$schemas:
+  - http://edamontology.org/EDAM_1.20.owl

@@ -121,27 +121,38 @@ steps:
 outputs:
   original_fastq1:
     type: File
+    format: edam:format_1930  # FASTQ
     outputSource: fetch_fastqs/fastq_file_1
   original_fastq2:
     type: File?
+    format: edam:format_1930  # FASTQ
     outputSource: fetch_fastqs/fastq_file_2
 
   bam:
     type: File
+    format: edam:format_2572  # BAM
     outputSource: rename_bam/outfile
 
   fastp_html_report:
     type: File
+    format: edam:format_2331  # HTML
     outputSource: rename_fastp_html/outfile
-
   fastp_json_report:
     type: File
+    format: edam:format_3464  # JSON
     outputSource: rename_fastp_json/outfile
-
 
   multiqc_html:
     type: File
+    format: edam:format_2331  # HTML
     outputSource: rename_multiqc_html/outfile
   multiqc_zip:
     type: File
+    format: edam:format_3464  # JSON
     outputSource: rename_multiqc_zip/outfile
+
+$namespaces:
+  edam: http://edamontology.org/
+
+$schemas:
+  - http://edamontology.org/EDAM_1.20.owl

@@ -18,6 +18,24 @@ Current members are working on the following analysis steps :
 - To pursue this effort, we are looking for volunteers especially on task MRCA,
 'S protein' analysis and Recombination Selection (but any complementary tasks  could be included as well)
 
+### why
+
+The initial idea is to convert  Galaxy workflows in CWL
+for different reasons : 
+
+1/ CWL  is command line oriented. 
+2/ no gui needed, but possible.
+3/ execution environment is easy to deploy 
+( with docker...) on local PC,clusters or cloud).
+4/ interoperability, reusability
+5/ developer oriented (for tool creators AND workflow designers)
+6/ design toolbox (see rabix-composer )
+7) open source + community
+
+In a second time, using these components, other workflow designers will be able to refine the initial workflows and, we hope,  create new ones to follow the state of the art on COVID19 research
+
+
+
 ### how to 
 
 
@@ -36,15 +54,40 @@ git submodule update
 
 ##  contribute
 
-- Workflow & tool dev welcome !  
+- Workflow & tool dev  welcome !  
 Ask to join on the biohackathon slack workflow channel
 or pull request
 
-more on CWL at https://www.commonwl.org
+More on CWL at https://www.commonwl.org
 
 -  You can contribute as well if:
   you can wrap a tool as a script (python bash...)
   and/or know containers (docker...)
+  
+
+------------------
+### first development steps & tricks
+
+1/ it is easier to create the tools first.
+
+To create a CWL tool from a Galaxy tool, you can 
+decipher the tool XML files (like https://github.com/galaxyproject/tools-iuc/blob/master/tools/unicycler/unicycler.xml )
+
+
+2/ After, the different tools/building blocks can be merge as a workflow. That step is easy if you use the rabix-composer to help you (http://docs.rabix.io/rabix-composer-installation)
+
+
+
+### What to do if you are new in CWL :
+
+In many cases, an intermediary wrapper script is useful  to manage the input parameters and call the analytical tool
+
+- you can, for example, begin by creating a python script with argparse. 
+It will wrap the analytical tool command line (with subprocess, https://docs.python.org/3/library/subprocess.html), and then use the argparse2cwl tool to generate a  cwl file
+see http://anton-khodak.github.io/argparse2cwl-blog/2016/08/11/gentle-introduction.html 
+
+
+- Another option is to create a bash script, but you will need to write the cwl from scratch.  
 
 ##  best practice
 

@@ -61,8 +61,8 @@ see example :  https://github.com/fjrmoreews/cwl-workflow-SARS-CoV-2/blob/prepro
  - ask for merging to master, when it's clean enought.
   
   
-Then,  we will  update the bio-cwl-tools repository (fork), that will be merge  to the original 
-cwl tool main repository, on a regular basis.
+Then,  we will  update the bio-cwl-tools repository (fork), that will be merge , on a regular basis,  to the reference 
+cwl tool main repository: https://github.com/common-workflow-library/bio-cwl-tools.
 
 
 

@@ -15,7 +15,8 @@ Current members are working on the following analysis steps :
 - **Variation**
 - ~~Protein~~
 
-
+- To pursue this effort, we are looking for volunteers especially on task MRCA,
+'S protein' analysis and Recombination Selection (but any complementary tasks  could be included as well)
 
 ### how to 
 

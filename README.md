@@ -33,15 +33,33 @@ git submodule update
 
 ```
 
-   
-  
-  
-  
-
-
-Workflow dev welcome ! 
+##  contribute
+Workflow dev welcome !  
+Ask to join on the biohackathon slack workflow channel
+or pull request
 
 more on CWL at https://www.commonwl.org
+
+
+##  best practice
+
+- Create a branch, checkout , push your code 
+- when your workflow is almost done, refactor it as follow:
+  in the cwl workflow file, all  cwl tools should be defined as external files and called as follow:
+```
+  mytool:
+    run: ../bio-cwl-tools/mytool/mytool.cwl
+```
+
+see example :  https://github.com/fjrmoreews/cwl-workflow-SARS-CoV-2/blob/preprocessing/PreProcessing/preprocess-illumina.cwl
+
+ - ask for merging to master, when it's clean enought.
+  
+  
+Then,  we will  update the bio-cwl-tools repository (fork), that will be merge  to the original 
+cwl tool main repository, on a regular basis.
+
+
 
 <!-- -->
 

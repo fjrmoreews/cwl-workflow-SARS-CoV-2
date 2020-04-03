@@ -25,6 +25,7 @@ outputs:  []
 #    type: File
 #    outputBinding:
 #      glob: "snpeff_out/*.fasta"
+
 requirements:
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement

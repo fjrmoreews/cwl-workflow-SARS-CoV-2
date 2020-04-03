@@ -3,16 +3,16 @@ CWL workflows related to virus genomics with focus on SARS-CoV-2
 
 
 ### road map
-first task : migrate to CWL standard building blocks from 
+First task : migrate to CWL standard building blocks from 
 
 https://github.com/galaxyproject/SARS-CoV-2/tree/master/genomics
 
 
 Current members are working on the following analysis steps : 
 
-- **PreProcessing** [branch](tree/preprocessing/PreProcessing)
-- **Assembly** [branch](tree/assembly/Assembly)
-- **Variation** [branch](tree/variation/Variation)
+- **PreProcessing** [branch](https://github.com/fjrmoreews/cwl-workflow-SARS-CoV-2/tree/preprocessing/PreProcessing)
+- **Assembly** [branch](https://github.com/fjrmoreews/cwl-workflow-SARS-CoV-2/tree/assembly/Assembly)
+- **Variation** [branch](https://github.com/fjrmoreews/cwl-workflow-SARS-CoV-2/tree/variation/Variation)
 - ~~S-Protein~~
 - ~~MRCA~~
 - ~~Recombination Selection~~
@@ -20,7 +20,7 @@ Current members are working on the following analysis steps :
 - To pursue this effort, we are looking for volunteers especially on task MRCA,
 'S protein' analysis and Recombination Selection (but any complementary tasks  could be included as well)
 
-### why
+### Why
 
 The initial idea is to convert  Galaxy workflows in CWL
 for different reasons : 
@@ -38,7 +38,7 @@ In a second time, using these components, other workflow designers will be able 
 
 
 
-### how to 
+### How to 
 
 
 ```
@@ -54,7 +54,7 @@ git submodule update
 
 ```
 
-##  contribute
+##  Contribute
 
 - Workflow & tool dev  welcome !  
 Ask to join on the biohackathon slack workflow channel
@@ -68,15 +68,15 @@ More on CWL at https://www.commonwl.org
   
 
 ------------------
-### first development steps & tricks
+### First development steps & tricks
 
-1/ it is easier to create the tools first.
+1/ It is easier to create the tools first.
 
 To create a CWL tool from a Galaxy tool, you can 
 decipher the tool XML files (like https://github.com/galaxyproject/tools-iuc/blob/master/tools/unicycler/unicycler.xml )
 
 
-2/ After, the different tools/building blocks can be merge as a workflow. That step is easy if you use the rabix-composer to help you (http://docs.rabix.io/rabix-composer-installation)
+2/ After, the different tools/building blocks can be merge as a workflow. That step is easy if you use the [rabix-composer] (http://docs.rabix.io/rabix-composer-installation) to help you.
 
 
 

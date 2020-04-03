@@ -10,10 +10,12 @@ https://github.com/galaxyproject/SARS-CoV-2/tree/master/genomics
 
 Current members are working on the following analysis steps : 
 
-- **PreProcessing**
-- **Assembly**
-- **Variation**
-- ~~Protein~~
+- **PreProcessing** [branch](tree/preprocessing/PreProcessing)
+- **Assembly** [branch](tree/assembly/Assembly)
+- **Variation** [branch](tree/variation/Variation)
+- ~~S-Protein~~
+- ~~MRCA~~
+- ~~Recombination Selection~~
 
 - To pursue this effort, we are looking for volunteers especially on task MRCA,
 'S protein' analysis and Recombination Selection (but any complementary tasks  could be included as well)

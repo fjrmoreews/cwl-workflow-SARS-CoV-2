@@ -302,9 +302,7 @@ requirements:
                  var fq1=""
                  var fq2=""
                  var lr=""
-                 var cmd_base=""
-                 var opt=""
-               
+                  
                //###################paired case              
                      if (inputs.fastq_file_type =="paired"  ){
                       if( inputs.fastq1_type=='fastqsanger' ){

@@ -58,34 +58,6 @@ inputs:
  
 
 
-##1 input collection forward + reverse
-##
-##  - id: fastq1_forward_type
-##    type:
-##      type: enum?
-##      symbols:
-##        - fastqsanger
-##        - fastqsanger.gz
-##      name: fastq1_forward_type
-##    doc: ""
-
-    
-##  - id: fastq1_forward
-##    type: File?
-##    doc: ""    
-    
-##  - id: fastq1_reverse_type
-##    type:
-##      type: enum?
-##      symbols:
-##        - fastqsanger
-##        - fastqsanger.gz
-##      name: fastq1_reverse_type
-##    doc: ""
-    
-##  - id: fastq1_reverse
-##    type: File?
-##    doc: ""
 
 
 
@@ -231,16 +203,12 @@ inputs:
   - id: rotation_start_gene_id
     type:  float
     default: 90.0
-#    max: 100.0
-#    min: 0.0
     doc: "The minimum required BLAST percent identity for a start gene search. max 100, min 0"
 
 
   - id: rotation_start_gene_cov
     type:  float
     default: 95.0
-#    max: 0.0
-#    min: 100.0
     doc: "The minimum required BLAST percent coverage for a start gene search. min 0, max 100"
 
 
@@ -253,14 +221,12 @@ inputs:
   - id: graph_clean_min_component_size
     type:  int
     default: 1000
-#    min: 0
     doc: "Contigs shorter than this value (bp) will not be polished using Pilon; min 0"
 
     
   - id: graph_clean_min_dead_end_size
     type:  int
     default: 1000
-#    min: 0
     doc: |
          These options control the removal of small leftover sequences after bridging is complete.
          Unbridged graph components smaller than this size will be removed from the final graph,
@@ -290,20 +256,30 @@ inputs:
  
     
 outputs:
-  - id: all
+  - id: exec_script
     type: File
     outputBinding:
-      glob: "*.*"  
+      glob: "*.sh"  
+    doc: |
+          Launching script for learning purpose
 
-#  - id: assembly_graph
-#    type: File
-#    outputBinding:
-#      glob: assembly.gfa
 
-#  - id: assembly
-#    type: File
-#    outputBinding:
-#      glob: assembly.fasta
+  - id: assembly_graph
+    type: File
+    outputBinding:
+      glob: assembly.gfa
+    doc: |
+          Assembly graph
+
+
+
+  - id: assembly
+    type: File
+    outputBinding:
+      glob: assembly.fasta
+    doc: |
+          fasta assembly output sequence
+          (main output)
       
       
 arguments:
@@ -312,7 +288,14 @@ requirements:
   - class: InitialWorkDirRequirement
     listing:
       - entryname: unicycler_launch.sh
-        entry: >+
+        entry: |
+               #!/bin/bash
+               ###########################
+               #      unicycler launcher
+               ###########################
+
+               ##preparing input files
+               #check permission / chmod  is issues
                ${
                  var fl=""
                  var lncmd="" 
@@ -321,9 +304,8 @@ requirements:
                  var lr=""
                  var cmd_base=""
                  var opt=""
-               //###########################preparing input files
-               //###################paired case
                
+               //###################paired case              
                      if (inputs.fastq_file_type =="paired"  ){
                       if( inputs.fastq1_type=='fastqsanger' ){
                           fq1 = "fq1.fastq"
@@ -337,16 +319,15 @@ requirements:
                        else if( inputs.fastq2_type=='fastqsanger.gz' ){
                            fq2 = "fq2.fastq.gz"
                         }
-                        
-                        lncmd+=" ln -s '"+inputs.fastq1.path+"' $fq1 && "
-                        lncmd+=" ln -s '"+inputs.fastq2.path+"' $fq2 && "
+                        lncmd+="fq1='"+fq1+"'"
+                        lncmd+=" && "
+                        lncmd+="fq2='"+fq2+"'"
+                        lncmd+=" && "
+                        lncmd+=" ln -s '"+inputs.fastq1.path+"' $fq1 "
+                        lncmd+=" && "
+                        lncmd+=" ln -s '"+inputs.fastq2.path+"' $fq2  "
         
                      }
-   
-                //--------------
-              
-     
-                 
                 //###################single case
                  
                 if (inputs.fastq_file_type =="single"  ){
@@ -356,12 +337,10 @@ requirements:
                   else if( inputs.fastq1_type=='fastqsanger.gz' ){
                        fq1 = "fq1.fastq.gz"
                   }
-                
- 
-                   lncmd+=" ln -s '"+inputs.fastq1.path+"' $fq1 && "
- 
+                  lncmd+="fq1='"+fq1+"'"
+                  lncmd+=" && "
+                  lncmd+=" ln -s '"+inputs.fastq1.path+"' $fq1 "
                  }
-
                  //####### long reads
                   if (  inputs.sequence_long !== null) {
                       if (inputs.sequence_long_type=='fastqsanger'){
@@ -373,101 +352,108 @@ requirements:
                       else if (inputs.sequence_longg_type=='fasta') {
                                lr = "lr.fasta"
                       }
-                
-                      lncmd+=" ln -s '"+inputs.sequence_long.path+"' '$lr' &&"
+                      lncmd+="lr='"+lr+"'"
+                      lncmd+=" && "
+                      lncmd+= " ln -s '"+inputs.sequence_long.path+"' '$lr' "
                   }
-                 //###################link files
-                 //## Get location for pilon installation
-                 lncmd+=" PILONJAR=/usr/share/java/pilon.jar && "
+
+
+                  return lncmd
+
+               }
+
+
+               ##general options
+
+               read -d '' GENERALOPT << EOF
+               ${
+                var opt=""  
+                //## General Unicycler Options section
+                opt+=" --mode "+inputs.mode+" "
+                opt+=" --min_fasta_length "+inputs.min_fasta_length+" "
+                opt+=" --linear_seqs "+inputs.linear_seqs+" "
+
+                if (inputs.min_anchor_seg_len  != null ){opt+=" --min_anchor_seg_len "+inputs.min_anchor_seg_len+" "}
+
+                //## Spades Options section
+                if(inputs.spades_no_correct==true){opt+=" --no_correct "}
+                opt+=" --min_kmer_frac "+inputs.spades_min_kmer_frac+" "
+                opt+=" --max_kmer_frac "+inputs.spades_max_kmer_frac+" "
+                if (inputs.spades_kmers   != null){opt+=" --kmers "+inputs.spades_kmers+" "}
+                               
+                opt+=" --kmer_count "+inputs.spades_kmer_count+" "
+                opt+=" --depth_filter "+inputs.spades_depth_filter+" "
+                if (inputs.spades_largest_component){opt+=" --largest_component "}
+                //## Rotation Options section
+                if(inputs.rotation_no_rotate == true){ opt+=" --no_rotate "}
+                if (inputs.rotation_start_genes!=null){opt+=" --start_genes "+ inputs.rotation_start_genes.path+ " "}
+                opt+=" --start_gene_id "+inputs.rotation_start_gene_id+" "
+                opt+=" --start_gene_cov "+inputs.rotation_start_gene_cov+" "
+                return opt
+                }
+               EOF
+               
+               ##additionnal option
+              
+               read -d '' ADDOPT << EOF
+               ${
+
+                var opt=""
+                
+                if (inputs.pilon_no_pilon  == true){ opt+=" --no_pilon " }
+                if (inputs.pilon_min_polish_size  != null){opt+=" --min_polish_size "+inputs.pilon_min_polish_size + " "}
+                //## Long Read Alignment Options
+                if ( inputs.lr_align_contamination!=null){opt+=" --contamination "+inputs.lr_align_contamination + " "}
+                opt+=" --scores "+inputs.lr_align_scores+" "
+                if (inputs.lr_align_low_score != null){opt+=" --low_score "+inputs.lr_align_low_score+" "}
+                 return ''+ opt + ''
+               }
+               EOF
+
+               ## Get location for pilon jar file
+
+               ${
+                 var cmd=""  
+                 cmd+="PILONJAR=/usr/share/java/pilon.jar "
+                 return cmd
+               }   
+
+               ## Build Unicycler command
+               ${
+               
+                 var cmd_base=""
+                 var opt=""
+
                  
-                 //## Build Unicycler command
+                 
                  
                  cmd_base+=" unicycler -t "+inputs.compute_slots+"  "
                  cmd_base+=" -o ./  "
                  cmd_base+=" --verbosity 3  "
                  cmd_base+=" --pilon_path \$PILONJAR  "
 
-              
+                
                 if ( inputs.fastq_file_type == "paired"){
-                       opt+=" -1 '"+fq1+"' -2 '"+fq2+"'  "
+                       opt+=" -1 $fq1 -2 $fq2  "
                 }
                 else if ( inputs.fastq_file_type == "paired_collection"){
-                       opt+=" -1 '"+fq1+"' -2 '"+fq2+"'  "
+                       opt+=" -1 $fq1 -2 $fq2  "
                 }  
                 else if ( inputs.fastq_file_type == "single"){
-                   opt+=" -s '"+fq1+"' "
+                   opt+=" -s $fq1 "
                 }
                 if (  inputs.sequence_long !== null) {
-                  opt+=" -l "+lr+" "
-                }
-                //## General Unicycler Options section
-                opt+=" --mode '"+inputs.mode+"' "
-                opt+=" --min_fasta_length '"+inputs.min_fasta_length+"' "
-                opt+=" --linear_seqs '"+inputs.linear_seqs+"' "
-
-                if (inputs.min_anchor_seg_len  != null ){
-                   opt+=" --min_anchor_seg_len '"+inputs.min_anchor_seg_len+"' "
+                  opt+=" -l $lr "
                 }
 
-                 //--------------
-                
-                //## Spades Options section
-                if(inputs.spades_no_correct==true){    
-                   opt+=" --no_correct "
-                }
-                opt+=" --min_kmer_frac '"+inputs.spades_min_kmer_frac+"' "
-                opt+=" --max_kmer_frac '"+inputs.spades_max_kmer_frac+"' "
-                if (inputs.spades_kmers   != null){
-                    opt+=" --kmers '"+inputs.spades_kmers+"' "
-                }
-                               
-                opt+=" --kmer_count '"+inputs.spades_kmer_count+"' "
-                opt+=" --depth_filter '"+inputs.spades_depth_filter+"' "
-                if (inputs.spades_largest_component){
-                   opt+=" --largest_component "
-                }
-                 
-                //## Rotation Options section
-                 
-                if(inputs.rotation_no_rotate==true){    
-                   opt+=" --no_rotate "
-                }
-                if (inputs.rotation_start_genes){
-                  opt+=" --start_genes '"+ inputs.rotation_start_genes.path+ "' "
-                }
-                opt+=" --start_gene_id '"+inputs.rotation_start_gene_id+"' "
-                opt+=" --start_gene_cov '"+inputs.rotation_start_gene_cov+"' "
-                
-                //## Pilon Options section
-                if(inputs.pilon_no_pilon==true){    
-                   opt+=" --no_pilon "
-                }
- 
-                if (inputs.pilon_min_polish_size  != null){
-                    opt+=" --min_polish_size '"+inputs.pilon_min_polish_size + "' "
-                }
-                
-                //## Long Read Alignment Options
-                if ( inputs.lr_align_contamination!=null){
-                   opt+=" --contamination '"+inputs.lr_align_contamination + "' "
-                }
-                opt+=" --scores '"+inputs.lr_align_scores+"' "
-                
-                if (inputs.lr_align_low_score != null){
-                    opt+=" --low_score '"+inputs.lr_align_low_score+"' "
-                }
-               /*  */
-                 
-                
-                //## writing preprocessing+ Unicycler
-                var cmdl="ls && "+lncmd+" "+cmd_base+" "+opt
+
+                //##  Unicycler command
+                var cmdl=cmd_base+" "+opt+" \$GENERALOPT \$ADDOPT "
                
                 return cmdl
 
- 
-                 
-                 
                 }
+                
 
  
 #        writable: false
@@ -484,4 +470,5 @@ doc: |
     final assembly in FASTA format (major output)
     final assembly grapth in graph format, visualized using tools such as  
     Bandage  https://github.com/rrwick/Bandage      
+
 

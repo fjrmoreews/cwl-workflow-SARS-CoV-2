@@ -46,12 +46,14 @@ In a second time, using these components, other workflow designers will be able 
 
 git clone https://github.com/fjrmoreews/cwl-workflow-SARS-CoV-2.git
 
+#tool module management
+#first option (clean)
 git submodule init
-
 git submodule update
-
-
-
+git submodule foreach "(git checkout release; git pull)&"
+######second option
+git clone https://github.com/fjrmoreews/bio-cwl-tools.git
+cp -r bio-cwl-tools ./cwl-workflow-SARS-CoV-2/
 ```
 
 ##  Contribute

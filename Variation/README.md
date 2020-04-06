@@ -53,3 +53,14 @@ echo "covid19.genome : covid19" >> snpeff_output/snpEff.config &&
 echo "covid19.codonTable : Standard" >> snpeff_output/snpEff.config
 
 ##### Conclusion > Use InitialWorkDirReq for mkdir & ln & echo and baseCommand for snpEff build
+snpbuild doesn't have any output.
+
+### BOWTIE2
+#### 1- build 
+bowtie2_build OK
+#### 2- align
+bowtie2_build's outputs can't be bowtie2_align or bowtie2 's inputs.
+Some changes have been made in order to concatenate this two steps.
+
+### Mark Duplicates / PICARD
+https://github.com/galaxyproject/tools-iuc/blob/master/tools/picard/picard_MarkDuplicates.xml

@@ -1,0 +1,28 @@
+
+########example data are not meanful here
+
+libraries_fwd_rev:
+  - {lib_index: 1 ,  fwd_reads: {class: File, path: ./test/test-data/x/ecoli_1K_FW_x.fq}, rev_reads: {class: File, path: ./test/test-data/x/ecoli_1K_REV_x.fq}}
+
+libraries_mono:
+  - {lib_index: 2 ,  reads: {class: File, path: ./test/test-data/x/ecoli_1K_1xxmono.fq}, file_type: unpaired}
+
+
+libraries_metadata:
+  - {lib_index: 1, orientation: fr, lib_type: mate_paired }
+  - {lib_index: 2, orientation: fr, lib_type: paired_end }
+
+
+nanopore_reads:
+      - { class: File, path: ./test/test-data/ecoli_1K_1.fasta }
+  
+pacbio_reads:
+      - { class: File, path: ./test/test-data/x/ecoli_1K_1x.fq }
+
+sanger_reads:
+      - { class: File, path: ./test/test-data/x/ecoli_1K_1xx.fq}
+
+
+cov_state: auto
+
+ 

@@ -1,17 +1,20 @@
 ## Assembly
 
-### Unicycler tool
+### Spades and Unicycler tools
 
 #### CWL
 
-first working version :
+working version :
 ```
-cd  Assembly/tool/test
+#spades
+cd  Assembly/spades/test
+bash run_assembly_wf.sh
+
+#unicycler
+cd  Assembly/unicycler/test
 #test workflow
 bash run_assembly_wf.sh  
 
-#test tool
-bash run_tool.sh  
 ```
 
 #### Docker

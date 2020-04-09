@@ -62,7 +62,7 @@ bowtie2_build OK
 bowtie2_build's outputs can't be bowtie2_align or bowtie2 's inputs.
 Some changes have been made in order to concatenate this two steps.
 
-### Mark Duplicates / PICARD
+### PICARD: Mark Duplicates 
 https://github.com/galaxyproject/tools-iuc/blob/master/tools/picard/picard_MarkDuplicates.xml
 ##### IN :
 -
@@ -80,3 +80,6 @@ Error: Exception in thread "main" picard.PicardException: This program requires 
 >> "Galaxy automatically coordinate-sorts all uploaded BAM files." 
 Galaxy doesn't explicitely mention how BAM files are coordinate-sorted.
 We will use : Picard SortSam Sort SAM/BAM by coordinate or queryname.
+
+### PICARD: SortSAm
+https://github.com/galaxyproject/tools-iuc/blob/master/tools/picard/picard_SortSam.xml

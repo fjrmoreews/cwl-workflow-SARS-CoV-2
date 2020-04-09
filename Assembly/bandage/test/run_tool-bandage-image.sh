@@ -4,7 +4,7 @@ DEBUG="--debug"
 cd ..
 CWL="../../bio-cwl-tools/bandage/bandage-image.cwl"
 
-cwl-runner run: $CWL -h
+cwl-runner  $CWL -h
 
 
 cwl-runner $DEBUG  $CWL  \

@@ -64,6 +64,19 @@ Some changes have been made in order to concatenate this two steps.
 
 ### Mark Duplicates / PICARD
 https://github.com/galaxyproject/tools-iuc/blob/master/tools/picard/picard_MarkDuplicates.xml
+##### IN :
+-
+-
+-
+-
+-
+-
+##### OUT :
+- metrics_file .txt
+- outFile .bam
+
 Error: Exception in thread "main" picard.PicardException: This program requires input that are either coordinate or query sorted (according to the header, or at least ASSUME_SORT_ORDER and the content.) 
 
 >> "Galaxy automatically coordinate-sorts all uploaded BAM files." 
+Galaxy doesn't explicitely mention how BAM files are coordinate-sorted.
+We will use : Picard SortSam Sort SAM/BAM by coordinate or queryname.

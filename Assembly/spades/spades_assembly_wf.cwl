@@ -274,7 +274,7 @@ steps:
 
 
 
-    run: ./spades.cwl
+    run: ../../bio-cwl-tools/spades/spades.cwl
 
 requirements: []
 

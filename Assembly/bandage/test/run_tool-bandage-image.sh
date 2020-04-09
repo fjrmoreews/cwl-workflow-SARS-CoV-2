@@ -2,13 +2,12 @@
 DEBUG="--debug"
 #DEBUG=""
 cd ..
+CWL="../../bio-cwl-tools/bandage/bandage-image.cwl"
 
-cwl-runner $DEBUG  bandage-image.cwl -h
+cwl-runner run: $CWL -h
 
 
-
-
-cwl-runner $DEBUG  bandage-image.cwl  \
+cwl-runner $DEBUG  $CWL  \
  --graph $PWD/test/test-data/gfa.tabular \
  --format png \
  --height 2500  \

@@ -2,7 +2,10 @@
 #DEBUG="--debug"
 DEBUG=""
 cd ..
-cwl-runner $DEBUG  bandage-info.cwl  \
+CWL="../../bio-cwl-tools/bandage/bandage-info.cwl"
+cwl-runner  $CWL -h
+
+cwl-runner $DEBUG  $CWL  \
  --tsv  \
  --graph $PWD/test/test-data/gfa.tabular 
  

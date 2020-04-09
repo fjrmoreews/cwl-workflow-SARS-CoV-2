@@ -215,10 +215,10 @@ outputs:
       - spades/all_log
     type: 'File[]'
 
-  - id: all_script
-    outputSource:
-      - spades/all_script
-    type: 'File[]'
+#  - id: all_script
+#    outputSource:
+#      - spades/all_script
+#    type: 'File[]'
 
 
 
@@ -270,7 +270,7 @@ steps:
       - id: assembly_graph_with_scaffolds
 
       - id: all_log
-      - id: all_script
+#      - id: all_script
 
 
 

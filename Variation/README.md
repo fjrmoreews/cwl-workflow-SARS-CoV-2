@@ -53,3 +53,33 @@ echo "covid19.genome : covid19" >> snpeff_output/snpEff.config &&
 echo "covid19.codonTable : Standard" >> snpeff_output/snpEff.config
 
 ##### Conclusion > Use InitialWorkDirReq for mkdir & ln & echo and baseCommand for snpEff build
+snpbuild doesn't have any output.
+
+### BOWTIE2
+#### 1- build 
+bowtie2_build OK
+#### 2- align
+bowtie2_build's outputs can't be bowtie2_align or bowtie2 's inputs.
+Some changes have been made in order to concatenate this two steps.
+
+### PICARD: Mark Duplicates 
+https://github.com/galaxyproject/tools-iuc/blob/master/tools/picard/picard_MarkDuplicates.xml
+##### IN :
+-
+-
+-
+-
+-
+-
+##### OUT :
+- metrics_file .txt
+- outFile .bam
+
+Error: Exception in thread "main" picard.PicardException: This program requires input that are either coordinate or query sorted (according to the header, or at least ASSUME_SORT_ORDER and the content.) 
+
+>> "Galaxy automatically coordinate-sorts all uploaded BAM files." 
+Galaxy doesn't explicitely mention how BAM files are coordinate-sorted.
+We will use : Picard SortSam Sort SAM/BAM by coordinate or queryname.
+
+### PICARD: SortSAm
+https://github.com/galaxyproject/tools-iuc/blob/master/tools/picard/picard_SortSam.xml

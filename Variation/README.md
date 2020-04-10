@@ -89,3 +89,30 @@ We will use : Picard SortSam Sort SAM/BAM by coordinate or queryname.
 https://github.com/galaxyproject/tools-iuc/blob/master/tools/picard/picard_SortSam.xml
 ##### IN:
 ##### OUT:
+
+### loFreq: litervi
+https://github.com/galaxyproject/tools-iuc/blob/master/tools/lofreq/lofreq_viterbi.xml
+https://csb5.github.io/lofreq/commands/
+
+##### IN:
+- reads (bam)
+- delflags (boolean) --delflags ou --keepflags
+  doc:             label="Delete flags MC, MD, NM, and A?"
+              help="These flags are all prone to getting invalidated during realignment. Keep them only if you know what you are doing." />
+- bq2_handling / replace_bq2 (keep, dynamic or fixed) Keep unchanged, Adjust dynamically, Replace with fixed base quality
+  doc: label="How to handle base qualities of 2?"
+  help="In sequenced reads obtained with Illumina sequencing pipelines before version 1.8, base quality 2 is special in that it  serves as a general indicator of low quality of the corresponding bases. For such reads, the tool can make an optimistic guess of the real quality of such bases by replacing base qualities of 2 with the median of all other base qualities observed in the read. Alternatively, you can provide a fixed replacement value. For recently obtained sequencing data, just keep BQ2 values unchanged (the default) since they have no special meaning.">
+
+##### OUT:
+- realigned (bam)
+
+
+##### COMMAND:
+
+>>         @PREPARE_REF@
+        lofreq viterbi
+        --ref '$reference_fasta_fn'
+        ${adv_options.delflags}
+        --defqual ${adv_options.bq2_handling.defqual}
+        --out tmp.bam '$reads' &&
+        samtools sort -T "\${TMPDIR:-.}" -@ \${GALAXY_SLOTS:-1} -O BAM -o '$realigned' tmp.bam

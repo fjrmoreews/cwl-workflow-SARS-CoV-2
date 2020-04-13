@@ -10,9 +10,26 @@ requirements:
 
 inputs:
   illumina_accession: string
-  ref_human_genome: File
+  hg38_download_url: string
 
 steps:
+  download_reference_genome:
+    in:
+      url:
+        default: https://zenodo.org/record/3744785/files/hg38.tar.gz
+      output_name:
+        default: hg38.tar.gz
+    out:
+      - downloaded
+    run: ../bio-cwl-tools/util/wget.cwl
+
+  unpack_ref_genome:
+    in:
+      file: download_reference_genome/downloaded
+    out:
+      - hg_38_fa
+    run: ./tools/unpack_ref_db.cwl
+
   fetch_fastqs:
     in:
       sra_accession: illumina_accession
@@ -42,7 +59,7 @@ steps:
 
   bwa_mem:
     in:
-      Index: ref_human_genome
+      Index: unpack_ref_genome/hg_38_fa
       InputFile:
         source: [fastp/out_fastq1, fastp/out_fastq2]
         valueFrom: |

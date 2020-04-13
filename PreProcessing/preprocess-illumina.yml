@@ -3,19 +3,4 @@ illumina_accessions:
   - SRR10903402
 illumina_accession: SRR10903401
 
-ref_human_genome:
-  class: File
-  path: ./static/hg38.fna
-  secondaryFiles:
-    - class: File
-      path: ./static/hg38.fna.fai
-    - class: File
-      path: ./static/hg38.fna.bwt
-    - class: File
-      path: ./static/hg38.fna.amb
-    - class: File
-      path: ./static/hg38.fna.ann
-    - class: File
-      path: ./static/hg38.fna.pac
-    - class: File
-      path: ./static/hg38.fna.sa
+hg38_download_url: https://zenodo.org/api/files/bb560ad9-f9cc-4421-af83-8bfda3e0150f/hg38.tar.gz?versionId=8547dc01-38a7-41e5-b5a2-4c02e6724c9b

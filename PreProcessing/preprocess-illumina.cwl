@@ -10,22 +10,12 @@ requirements:
 
 inputs:
   illumina_accession: string
-  hg38_download_url: string
+  hg38: File
 
 steps:
-  download_reference_genome:
-    in:
-      url:
-        default: https://zenodo.org/record/3744785/files/hg38.tar.gz
-      output_name:
-        default: hg38.tar.gz
-    out:
-      - downloaded
-    run: ../bio-cwl-tools/util/wget.cwl
-
   unpack_ref_genome:
     in:
-      file: download_reference_genome/downloaded
+      file: hg38
     out:
       - hg_38_fa
     run: ./tools/unpack_ref_db.cwl
@@ -67,6 +57,8 @@ steps:
             return self.filter(function(x){return x});
           }
         linkMerge: merge_flattened
+      Threads:
+        valueFrom: $(1)
     out:
       - reads_stdout
     run: ../bio-cwl-tools/bwa/BWA-Mem.cwl
@@ -167,6 +159,11 @@ outputs:
     type: File
     format: edam:format_3464  # JSON
     outputSource: rename_multiqc_zip/outfile
+
+  mapped_fastq:
+    type: File
+    format: edam:format_1930  # FASTQ
+    outputSource: samtools_fastq/fastq
 
 $namespaces:
   edam: http://edamontology.org/

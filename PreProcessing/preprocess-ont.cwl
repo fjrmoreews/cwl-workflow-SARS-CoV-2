@@ -151,7 +151,7 @@ steps:
 outputs:
   original_fastq1:
     type: File
-    outputSource: fetch_fastqs/fastq_file_1
+    outputSource: rename_fastq/outfile
 
   fastqc_summary:
     type: File

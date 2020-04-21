@@ -349,8 +349,8 @@ steps:
       - id: assembly_graph
       - id: assembly
  
-    run: ../../bio-cwl-tools/unicycler/unicycler.cwl
- 
+#    run: ../../bio-cwl-tools/unicycler/unicycler.cwl
+    run: ./tool/unicycler.cwl 
 
 
   - id: spades
@@ -405,8 +405,8 @@ steps:
       - id: all_log
 #      - id: all_script
 
-    run: ../../bio-cwl-tools/spades/spades.cwl
- 
+#    run: ../../bio-cwl-tools/spades/spades.cwl
+    run: ./tool/spades.cwl 
  
   - id: bandage_image_unicycler
     in:
@@ -414,7 +414,8 @@ steps:
         source: unicycler/assembly_graph
     out:
       - id: image
-    run: ../../bio-cwl-tools/bandage/bandage-image.cwl
+#    run: ../../bio-cwl-tools/bandage/bandage-image.cwl
+    run: ./tool/bandage-image.cwl
  
   - id: bandage_info_unicycler
     in:
@@ -422,23 +423,24 @@ steps:
         source: unicycler/assembly_graph
     out:
       - id: assembly_graph_info
-    run: ../../bio-cwl-tools/bandage/bandage-info.cwl
- 
+#    run: ../../bio-cwl-tools/bandage/bandage-info.cwl
+    run: ./tool/bandage-info.cwl 
   - id: bandage_image_spades
     in:
       - id: graph
         source: spades/assembly_graph
     out:
       - id: image
-    run: ../../bio-cwl-tools/bandage/bandage-image.cwl
- 
+#    run: ../../bio-cwl-tools/bandage/bandage-image.cwl
+    run: ./tool/bandage-image.cwl 
   - id: bandage_info_spades
     in:
       - id: graph
         source: spades/assembly_graph
     out:
       - id: assembly_graph_info
-    run: ../../bio-cwl-tools/bandage/bandage-info.cwl
+#    run: ../../bio-cwl-tools/bandage/bandage-info.cwl
+    run: ./tool/bandage-info.cwl
 
 
     

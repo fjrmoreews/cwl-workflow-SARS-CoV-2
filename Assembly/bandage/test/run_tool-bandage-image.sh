@@ -7,7 +7,7 @@ CWL="../../bio-cwl-tools/bandage/bandage-image.cwl"
 cwl-runner  $CWL -h
 
 
-cwl-runner $DEBUG  $CWL  \
+cwl-runner  --outdir ./result $DEBUG  $CWL  \
  --graph $PWD/test/test-data/gfa.tabular \
  --format png \
  --height 2500  \
@@ -19,11 +19,7 @@ cwl-runner $DEBUG  $CWL  \
 OUTDIR=result
 
 if [ -d "$OUTDIR" ]; then
-    echo "dir $OUTDIR exists : deleting it"
-    rm -f  $OUTDIR/*
-    mkdir -p $OUTDIR
-    mv *png $OUTDIR/ 
-    mv bandage_image_launch.sh $OUTDIR/
+    echo "dir $OUTDIR exists "
     ls -l  $OUTDIR/
 fi
 

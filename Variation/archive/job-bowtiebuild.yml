@@ -1,0 +1,3 @@
+reference_in:
+        class: File
+        path: ./data/covid19.fa

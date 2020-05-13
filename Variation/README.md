@@ -1,3 +1,7 @@
+cwl-runner variation_SE.cwl job-variation_SE.yml  
+add data in /data/ and job-variation_SE.yml
+
+
 ## Variation
  https://github.com/galaxyproject/SARS-CoV-2/tree/master/genomics/4-Variation
 

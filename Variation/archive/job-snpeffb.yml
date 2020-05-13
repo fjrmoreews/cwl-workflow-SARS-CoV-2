@@ -1,0 +1,5 @@
+bankfile:
+        class: File
+        path: ./data/NC_045512.2
+
+dbname: covid19

@@ -1,0 +1,55 @@
+reads:
+        - {class: File, path: ./data/SRR11247078.fastqsanger.gz, format: http://edamontology.org/format_1931}
+        - {class: File, path: ./data/SRR11247077.fastqsanger.gz, format: http://edamontology.org/format_1931}
+min_length_required: 15
+disable_trim_poly_g: false
+force_polyg_tail_trimming: true
+
+reference_in:
+        class: File
+        path: ./data/covid19.fa
+        format: http://edamontology.org/format_1929
+end_to_end_very_sensitive: true
+
+alignments_are_sorted: true
+remove_duplicates: true
+min_cov: 100
+max_depth: 1000000
+min_bq: 30
+min_alt_bq: 30
+min_mq: 20
+max_mq: 255
+min_jq: 0
+min_alt_jq: 0
+def_alt_jq: 0
+#pvalue_cutoff: 0.1
+#bonferroni: 'dynamic'
+threads: 1
+call_indels: true
+
+bankfile:
+        class: File
+        path: ./data/NC_045512.2
+genome_reference: covid19
+udLength: 0
+formatEff: true
+classic: true
+inputFormat: vcf
+outputFormat: vcf
+importGenome: true
+
+extractFields:
+  - "CHROM"
+  - "POS"
+  - "REF"
+  - "ALT"
+  - "DP"
+  - "AF"
+  - "SB"
+  - "DP4"
+  - "EFF[*].IMPACT"
+  - "EFF[*].FUNCLASS"
+  - "EFF[*].EFFECT"
+  - "EFF[*].GENE"
+  - "EFF[*].CODON"
+empty_text: "."

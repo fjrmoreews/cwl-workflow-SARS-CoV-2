@@ -1,6 +1,0 @@
-fastq1:
-        class: File
-        path: ./data/SRR11247078.fastqsanger.gz
-min_length_required: 15
-disable_trim_poly_g: false
-force_polyg_tail_trimming: true

@@ -58,11 +58,17 @@ git clone https://github.com/fjrmoreews/bio-cwl-tools.git
 cp -r bio-cwl-tools ./cwl-workflow-SARS-CoV-2/
 ```
 
+
+# for branch selection
+cd bio-cwl-tools
+git pull origin release
+
 ##  Contribute
 
 - Workflow & tool dev  welcome !  
 Ask to join on the biohackathon slack workflow channel
 or pull request
+
 
 More on CWL at https://www.commonwl.org
 

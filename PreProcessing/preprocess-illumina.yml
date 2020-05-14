@@ -1,0 +1,8 @@
+illumina_accessions:
+  - SRR10903401
+  - SRR10903402
+illumina_accession: SRR10903401
+
+hg38_download_url:
+  class: File
+  location: https://zenodo.org/record/3744785/files/hg38.tar.gz

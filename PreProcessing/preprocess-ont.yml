@@ -1,0 +1,21 @@
+illumina_accessions:
+  - SRR10948550
+  - SRR10948474
+illumina_accession: SRR10948550
+
+ref_human_genome:
+  class: File
+  path: ./static/hg38.fna
+  secondaryFiles:
+    - class: File
+      path: ./static/hg38.fna.fai
+    - class: File
+      path: ./static/hg38.fna.bwt
+    - class: File
+      path: ./static/hg38.fna.amb
+    - class: File
+      path: ./static/hg38.fna.ann
+    - class: File
+      path: ./static/hg38.fna.pac
+    - class: File
+      path: ./static/hg38.fna.sa

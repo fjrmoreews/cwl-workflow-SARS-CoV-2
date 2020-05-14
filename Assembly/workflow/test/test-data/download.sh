@@ -1,0 +1,10 @@
+               wget https://raw.githubusercontent.com/galaxyproject/tools-iuc/master/tools/spades/test-data/auto_kmer_output.fa 
+	         wget https://raw.githubusercontent.com/galaxyproject/tools-iuc/master/tools/spades/test-data/ecoli_1K_1.fasta 
+	         wget https://raw.githubusercontent.com/galaxyproject/tools-iuc/master/tools/spades/test-data/ecoli_1K_1.fq  
+	         wget https://raw.githubusercontent.com/galaxyproject/tools-iuc/master/tools/spades/test-data/ecoli_1K_1.fq.gz  
+	         wget https://raw.githubusercontent.com/galaxyproject/tools-iuc/master/tools/spades/test-data/ecoli_1K_2.fasta  
+	         wget https://raw.githubusercontent.com/galaxyproject/tools-iuc/master/tools/spades/test-data/ecoli_1K_2.fq 	 
+	         wget https://raw.githubusercontent.com/galaxyproject/tools-iuc/master/tools/spades/test-data/ecoli_1K_2.fq.gz 	 
+	         wget https://raw.githubusercontent.com/galaxyproject/tools-iuc/master/tools/spades/test-data/kmer_33_output.fa  
+	         wget https://raw.githubusercontent.com/galaxyproject/tools-iuc/master/tools/spades/test-data/kmer_77_output.fa 
+	         wget https://raw.githubusercontent.com/galaxyproject/tools-iuc/master/tools/spades/test-data/reference_1K.fa 	 

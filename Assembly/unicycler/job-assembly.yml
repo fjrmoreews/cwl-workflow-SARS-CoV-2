@@ -1,0 +1,17 @@
+fastq1:
+  class: File
+  path:  ./test/test-data/phix_f.fq.gz
+
+fastq2:
+  class: File
+  path: ./test/test-data/phix_r.fq.gz
+
+fastq1_type: fastqsanger
+
+
+fastq2_type: fastqsanger
+
+fastq_file_type: paired
+
+mode: normal
+

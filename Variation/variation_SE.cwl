@@ -533,7 +533,7 @@ steps:
     out:
       - id: sequences_index
       - id: sequences_with_index
-    run: ../bio-cwl-tools/samtools/samtools_faidx.cwl
+    run: ./tools/samtools_faidx.cwl
 
   - id: samtool_index
     scatter: bam_sorted

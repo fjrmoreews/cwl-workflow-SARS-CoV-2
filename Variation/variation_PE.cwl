@@ -1,21 +1,25 @@
 class: Workflow
 cwlVersion: v1.0
-id: var
-label: var
-
+id: var_pe
+label: var-PE
+$namespaces:
+  edam: 'http://edamontology.org/'
 inputs:
-  # read(s):
-  - id: reads
+  - id: reads_reverse
     type: File[]
     format:
-      - edam:format_1930 # FASTA
-      - edam:format_1931 # FASTQ
+      - 'edam:format_1930'
+      - 'edam:format_1931'
 
-  # reference genome:
+  - id: reads_forward
+    type: File[]
+    format:
+      - 'edam:format_1930'
+      - 'edam:format_1931'
   - id: reference_in
     type: File
 
-  #### 1-  fastp options:
+   #### 1-  fastp options:
   - id: unqualified_phred_quality
     type: int?
   - id: threads
@@ -31,46 +35,7 @@ inputs:
   - id: base_correction
     type: boolean?
 
-#### bowtie2_build options:
-  - id: bmax
-    type: int?
-  - id: bmaxdivn
-    type: int?
-  - id: bt2_index_base
-    type: string?
-  - id: c
-    type: boolean?
-  - id: dcv
-    type: int?
-  - id: f
-    type: boolean?
-  - id: ftabchars
-    type: int?
-  - id: justref
-    type: boolean?
-  - id: large_index
-    type: boolean?
-  - id: noauto
-    type: boolean?
-  - id: nodc
-    type: boolean?
-  - id: noref
-    type: boolean?
-  - id: offrate
-    type: int?
-  - id: packed
-    type: boolean?
-  - id: quiet
-    type: boolean?
-  - id: seed
-    type: int?
-  - id: threads_bowtie2
-    type: int?
-#### bowtie2_align options: (many others)
-  - id: end_to_end_very_sensitive
-    type: boolean?
-
-#### picard__sort_sam options:
+   #### picard__sort_sam options:
   - id: sort_order
     type:
       - 'null'
@@ -87,7 +52,14 @@ inputs:
           - STRICT
           - LENIENT
           - SILENT
-#### picard__mark_duplicates options:
+
+# samtools_view
+  - id: exclude_unmapped
+    type: boolean?
+  - id: count
+    type: boolean
+
+   #### picard__mark_duplicates options:
   - id: alignments_are_sorted
     type: boolean
   - id: remove_duplicates
@@ -101,7 +73,7 @@ inputs:
           - LENIENT
           - SILENT
   - id: comment
-    type: string[]?
+    type: 'string[]?'
   - id: duplicate_scoring_strategy
     type:
       - 'null'
@@ -110,13 +82,12 @@ inputs:
           - SUM_OF_BASE_QUALITIES
           - TOTAL_MAPPED_REFERENCE_LENGTH
           - RANDOM
-  - id: read_name_regex
-    type: string?
   - id: optical_duplicate_pixel_distance
     type: int?
   - id: barcode_tag
     type: string?
-####lofreq_viterbi options:
+
+   ####lofreq_viterbi options:
   - id: keepflags
     type: boolean?
   - id: defqual
@@ -129,9 +100,8 @@ inputs:
           - keep
           - dynamic
           - fixed
-        name: bq2_handling
 
-#### lofreq_cal_variants options:
+   #### lofreq_cal_variants options:
   - id: bed
     type: File?
   - id: bonferroni
@@ -189,7 +159,7 @@ inputs:
   - id: min_alt_bq
     type: int?
 
-#### SnpEff buiild & ann:
+   #### SnpEff build & ann:
   - id: genome_reference
     type: string
   - id: udLength
@@ -217,7 +187,6 @@ inputs:
           - bed
           - gatk
           - bedAnn
-        name: outputFormat
   - id: onlyReg
     type: boolean?
   - id: onlyProtein
@@ -283,7 +252,7 @@ inputs:
   - id: geneId
     type: boolean?
 
-#### SNPSIFT
+   #### SNPSIFT
   - id: separator
     type: string?
   - id: empty_text
@@ -291,107 +260,59 @@ inputs:
   - id: extractFields
     type: 'string[]?'
 
+  - id: IndexName
+    type: string
+
 outputs:
-#FASTP:
-#  - id: html_report
-#    outputSource:
-#      - fastp/html_report
-#    type: File[]
   - id: multiqc_fastp
+    type: File
     outputSource:
       - multiqc_fastp/multiqc_zip
-#  - id: json_report
-#    outputSource:
-#      - fastp/json_report
-#    type: File[]
-#  - id: out_fastq1
-#    outputSource:
-#      - fastp/out_fastq1
-#    type: File[]
-
-#BOWTIE2_BUILD:
-#  - id: indices
-#    outputSource:
-#      - bowtie2_build/indices
-#    type: File
-
-#BOWTIE2_ALIGN:
-#  - id: output
-#    outputSource:
-#      - bowtie2_align/output
-#    type: File[]
-  - id: output_log
-    outputSource:
-      - bowtie2_align/output_log
+  - id: stats_bam
     type: File[]
-#picard_sortsam:
-#  - id: outFile
+    outputSource:
+      - samtools_stats/stats
+  - id: multiqc_markdups
+    type: File
+    outputSource:
+      - multiqc_markdups/multiqc_zip
+  - id: multiqc_samtoolsstats
+    outputSource:
+       - multiqc_stats/multiqc_zip
+    type: File
+#  - id: log
 #    outputSource:
-#      - picard__sort_sam/sorted_alignments
+#      - picard__mark_duplicates/log
 #    type: File[]
-
-#picard_markduplicates
-  - id: metrics
-    outputSource:
-      - picard__mark_duplicates/metrics
-    type: File[]
-  - id: log
-    outputSource:
-      - picard__mark_duplicates/log
-    type: File[]
-  - id: alignments
-    outputSource:
-      - picard__mark_duplicates/alignments
-    type: File[]
-
-#lofreq_viterbi:
-#  - id: realigned
+#  - id: alignments
 #    outputSource:
-#      - lofreq_viterbi/realigned
+#      - picard__mark_duplicates/alignments
 #    type: File[]
-#samtools_sort
-#  - id: bam_sorted
+#  - id: genes
 #    outputSource:
-#      - samtools_sort/bam_sorted
+#      - snpeff_build_ann/genes
 #    type: File[]
-#lofreq_call:
-#  - id: vcf
-#    outputSource:
-#      - lofreq_call/vcf
-#    type: File[]
-#SNPEFF:
-  - id: csvFile
-    outputSource:
-      - snpeff_build_ann/csvFile
-    type: File[]?
-  - id: genes
-    outputSource:
-      - snpeff_build_ann/genes
-    type: File[]?
-#  - id: snpeff_output
-#    outputSource:
-#      - snpeff_build_ann/snpeff_output
-#    type: File[]?
-  - id: statsFile
+  - id: statsFile_snpeff
     outputSource:
       - snpeff_build_ann/statsFile
-    type: File[]?
-#SNPSIFT:
-  - id: out
+    type: File[]
+  - id: out_snpsift
     outputSource:
       - snpsift_extract/out
     type: File[]
-
 steps:
   - id: fastp
-    scatter: fastq1
+    scatter: [fastq1, fastq2]
+    scatterMethod: dotproduct
     in:
       - id: base_correction
         source: base_correction
       - id: disable_trim_poly_g
         source: disable_trim_poly_g
       - id: fastq1
-        source: reads
+        source: reads_forward
+      - id: fastq2
+        source: reads_reverse
       - id: force_polyg_tail_trimming
         source: force_polyg_tail_trimming
       - id: min_length_required
@@ -406,7 +327,10 @@ steps:
       - id: html_report
       - id: json_report
       - id: out_fastq1
+      - id: out_fastq2
     run: ./tools/fastp.cwl
+
+  - id: multiqc_fastp
     in:
       - id: report_name
         valueFrom: 'multiqc_fast'
@@ -416,68 +340,24 @@ steps:
       - id: multiqc_zip
     run: ./tools/multiqc.cwl
 
-  - id: bowtie2_build
+  - id: samtools_view_filter
+    scatter: bam
     in:
-      - id: bmax
-        source: bmax
-      - id: bmaxdivn
-        source: bmaxdivn
-      - id: bt2_index_base
-        source: bt2_index_base
-      - id: c
-        source: c
-      - id: dcv
-        source: dcv
-      - id: f
-        source: f
-      - id: ftabchars
-        source: ftabchars
-      - id: justref
-        source: justref
-      - id: large_index
-        source: large_index
-      - id: noauto
-        source: noauto
-      - id: nodc
-        source: nodc
-      - id: noref
-        source: noref
-      - id: offrate
-        source: offrate
-      - id: packed
-        source: packed
-      - id: quiet
-        source: quiet
-      - id: reference_in
-        source:
-          - reference_in
-      - id: seed
-        source: seed
-      - id: threads
-        source: threads_bowtie2
+      - id: bam
+        source: bwa_mem/reads_stdout
+      - id: count
+        source: count
+      - id: exclude_unmapped
+        source: exclude_unmapped
     out:
-      - id: indices
-      - id: output_log
-    run: ./tools/bowtie2_build.cwl
+      - id: bam_filtered
+    run: ./tools/samtools_view_filter.cwl
 
-  - id: bowtie2_align
-    scatter: filelist
-    in:
-      - id: filelist
-        source: fastp/out_fastq1
-      - id: indices_file
-        source: bowtie2_build/indices
-      - id: end_to_end_very_sensitive
-        source: end_to_end_very_sensitive
-    out:
-      - id: output
-      - id: output_log
-    run: ./tools/bowtie2_align.cwl
-  - id: picard__sort_sam
+  - id: picard_sortsam
     scatter: alignments
-    in:
+    in: 
       - id: alignments
-        source: bowtie2_align/output
+        source: samtools_view_filter/bam_filtered
       - id: sort_order
         source: sort_order
       - id: validation_stringency
@@ -489,10 +369,10 @@ steps:
   - id: picard__mark_duplicates
     scatter: alignments
     in:
+      - id: alignments
+        source: picard_sortsam/sorted_alignments
       - id: alignments_are_sorted
         source: alignments_are_sorted
-      - id: alignments
-        source: picard__sort_sam/sorted_alignments
       - id: barcode_tag
         source: barcode_tag
       - id: comment
@@ -512,11 +392,19 @@ steps:
       - id: metrics
     run: ./tools/picard_MarkDuplicates.cwl
 
+  - id: multiqc_markdups
+    in:
+      - id: report_name
+        valueFrom: 'multiqc_markdups'
+      - id: qc_files_array
+        source: picard__mark_duplicates/metrics
+    out:
+      - id: multiqc_zip
+    run: ./tools/multiqc.cwl
+
   - id: lofreq_viterbi
     scatter: reads
     in:
-      - id: bq2_handling
-        source: bq2_handling
       - id: defqual
         source: defqual
       - id: keepflags
@@ -528,6 +416,7 @@ steps:
     out:
       - id: realigned
     run: ./tools/lofreq_viterbi.cwl
+
   - id: samtools_sort
     scatter: bam_unsorted
     in:
@@ -545,7 +434,7 @@ steps:
       - id: sequences_index
       - id: sequences_with_index
     run: ./tools/samtools_faidx.cwl
-
+    
   - id: samtool_index
     scatter: bam_sorted
     in:
@@ -555,76 +444,135 @@ steps:
       - id: bam_sorted_indexed
     run: ./tools/samtools_index.cwl
 
+  - id: bwa_index_cwl
+    in:
+      - id: InputFile
+        source: reference_in
+      - id: IndexName
+        source: IndexName
+    out:
+      - id: index
+    run: ./tools/bwa-index.cwl
+    
+  - id: get_secondaryfiles
+    in:
+      - id: bwa_index
+        source: bwa_index_cwl/index
+      - id: sequence
+        source: samtools_faidx/sequences_with_index
+    out:
+      - id: sequences_with_index
+    run: ./tools/get_secondaryfiles.cwl
+  - id: get_tab
+    scatter: [out_fastq1, out_fastq2]
+    scatterMethod: dotproduct
+    in: 
+      - id: out_fastq1
+        source: fastp/out_fastq1
+      - id: out_fastq2
+        source: fastp/out_fastq2
+    out:
+      - id: tab
+    run: ./tools/mergetab.cwl
+  - id: bwa_mem
+    scatter: InputFile
+    in:
+      Index:
+        source: get_secondaryfiles/sequences_with_index
+      InputFile:
+        source: get_tab/tab
+# [fastp/out_fastq1, fastp/out_fastq2]
+#        linkMerge: merge_nested #flattened
+    out:
+      - id: reads_stdout
+    run: ./tools/bwa-mem.cwl
+  - id: samtools_stats
+    scatter: input_file
+    in:
+      input_file:
+        source: samtools_view_filter/bam_filtered
+    out:
+      - id: stats
+    run: ./tools/samtools_stats.cwl
+  - id: multiqc_stats
+    in:
+      - id: report_name
+        valueFrom: 'multiqc_stats'
+      - id: qc_files_array
+        source: samtools_stats/stats
+    out:
+      - id: multiqc_zip
+    run: ./tools/multiqc.cwl 
 
   - id: lofreq_call
     scatter: [reads_align, reads_index]
-    scatterMethod: "dotproduct"
+    scatterMethod: dotproduct
     in:
-      - id: threads
-        source: threads_lf_call
-      - id: reference_index
-        source: samtools_faidx/sequences_index
-      - id: reference_fasta
-        source: samtools_faidx/sequences_with_index
-      - id: call_indels
-        source: call_indels
-      - id: only_indels
-        source: only_indels
       - id: bed
         source: bed
-      - id: region
-        source: region
-      - id: min_bq
-        source: min_bq
-      - id: min_alt_bq
-        source: min_alt_bq
+      - id: bonferroni
+        source: bonferroni
+      - id: call_indels
+        source: call_indels
       - id: def_alt_bq
         source: def_alt_bq
-      - id: min_jq
-        source: min_jq
-      - id: min_alt_jq
-        source: min_alt_jq
       - id: def_alt_jq
         source: def_alt_jq
-      - id: no_baq
-        source: no_baq
-      - id: no_idaq
-        source: no_idaq
       - id: del_baq
         source: del_baq
-      - id: no_ext_base_alignment_quality
-        source: no_ext_base_alignment_quality
-      - id: min_mq
-        source: min_mq
-      - id: max_mapping_quality
-        source: max_mapping_quality
-      - id: no_mapping_quality
-        source: no_mapping_quality
       - id: enable_source_qual
         source: enable_source_qual
       - id: ignore_vcf
         source:
           - ignore_vcf
-      - id: replace_non_match
-        source: replace_non_match
-      - id: pvalue_cutoff
-        source: pvalue_cutoff
-      - id: bonferroni
-        source: bonferroni
-      - id: min_cov
-        source: min_cov
-      - id: max_depth_cov
-        source: max_depth_cov
       - id: illumina_1_3
         source: illumina_1_3
-      - id: use_orphan
-        source: use_orphan
+      - id: max_depth_cov
+        source: max_depth_cov
+      - id: max_mapping_quality
+        source: max_mapping_quality
+      - id: min_alt_bq
+        source: min_alt_bq
+      - id: min_alt_jq
+        source: min_alt_jq
+      - id: min_bq
+        source: min_bq
+      - id: min_cov
+        source: min_cov
+      - id: min_jq
+        source: min_jq
+      - id: min_mq
+        source: min_mq
+      - id: no_baq
+        source: no_baq
       - id: no_default_filter
         source: no_default_filter
+      - id: no_ext_base_alignment_quality
+        source: no_ext_base_alignment_quality
+      - id: no_idaq
+        source: no_idaq
+      - id: no_mapping_quality
+        source: no_mapping_quality
+      - id: only_indels
+        source: only_indels
+      - id: pvalue_cutoff
+        source: pvalue_cutoff
       - id: reads_align
         source: samtools_sort/bam_sorted
       - id: reads_index
         source: samtool_index/bam_sorted_indexed
+      - id: reference_fasta
+        source: samtools_faidx/sequences_with_index
+      - id: reference_index
+        source: samtools_faidx/sequences_index
+      - id: region
+        source: region
+      - id: replace_non_match
+        source: replace_non_match
+      - id: threads
+        source: threads_lf_call
+      - id: use_orphan
+        source: use_orphan
     out:
       - id: vcf
     run: ./tools/lofreq_call.cwl
@@ -632,7 +580,7 @@ steps:
 
   - id: snpeff_build_ann
     scatter: sequence
-    in: 
+    in:
       - id: importGenome
         source: importGenome
       - id: genome_reference
@@ -745,8 +693,12 @@ steps:
     run: ./tools/snpSift_extract.cwl
 
 requirements:
-  ScatterFeatureRequirement: {}
-$namespaces:
-  edam: http://edamontology.org/
+  - class: ScatterFeatureRequirement
+  - class: SubworkflowFeatureRequirement
+  - class: MultipleInputFeatureRequirement
+  - class: StepInputExpressionRequirement
+  - class: InlineJavascriptRequirement
+
 $schemas:
-  - http://edamontology.org/EDAM_1.18.owl
+  - 'http://edamontology.org/EDAM_1.18.owl'
+

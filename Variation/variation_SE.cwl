@@ -293,10 +293,13 @@ inputs:
 
 outputs:
 #FASTP:
-  - id: html_report
+#  - id: html_report
+#    outputSource:
+#      - fastp/html_report
+#    type: File[]
+  - id: multiqc_fastp
     outputSource:
-      - fastp/html_report
-    type: File[]
+      - multiqc_fastp/multiqc_zip
 #  - id: json_report
 #    outputSource:
 #      - fastp/json_report
@@ -404,6 +407,14 @@ steps:
       - id: json_report
       - id: out_fastq1
     run: ./tools/fastp.cwl
+    in:
+      - id: report_name
+        valueFrom: 'multiqc_fast'
+      - id: qc_files_array
+        source: fastp/json_report
+    out:
+      - id: multiqc_zip
+    run: ./tools/multiqc.cwl
 
   - id: bowtie2_build
     in:

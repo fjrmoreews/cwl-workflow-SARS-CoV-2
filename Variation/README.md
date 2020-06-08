@@ -1,10 +1,25 @@
-cwl-runner variation_SE.cwl job-variation_SE.yml  
-add data in /data/ and job-variation_SE.yml
+### run workflow for paired-end data:
+`` cd cwl-workflow-SARS-Cov-2 ``
+
+``bash run_variation_paired-end.sh ``
+
+### run workflow for single-end data:
+`` cd cwl-workflow-SARS-Cov-2 ``
+
+``bash run_variation_single-end.sh``
+**or** 
+`` cwl-runner variation_SE.cwl job-variation_SE.yml  ``
+
+**to custom data, add your data in Variation/data/ and edit job-variation_SE.yml or job-variation_PE.yml**
+
+
 
 
 ## Variation
  https://github.com/galaxyproject/SARS-CoV-2/tree/master/genomics/4-Variation
 
+
+### Example of the translation process:
 ### FASTP
 
 ### MULTIQC : html files from FASTP

@@ -12,7 +12,7 @@
 
 **to custom data, add your data in Variation/data/ and edit job-variation_SE.yml or job-variation_PE.yml**
 
-
+**more data on https://github.com/galaxyproject/SARS-CoV-2/tree/master/genomics/4-Variation**
 
 
 ## Variation

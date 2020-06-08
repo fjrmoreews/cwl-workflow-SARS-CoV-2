@@ -1,8 +1,16 @@
 #fastp
 reads_reverse:
-        - {class: File, path: ./data/SRR10903402/reverse.fastqsanger, format: http://edamontology.org/format_1931}
+        - {class: File, path: ./data/SRR10903401_reverse.fastqsanger.gz, format: http://edamontology.org/format_1931}
+        - {class: File, path: ./data/SRR10903402_reverse.fastqsanger, format: http://edamontology.org/format_1931}
+        - {class: File, path: ./data/SRR11059940_reverse.fastqsanger.gz, format: http://edamontology.org/format_1931}
+        - {class: File, path: ./data/SRR10971381_reverse.fastqsanger.gz, format: http://edamontology.org/format_1931}
+        
 reads_forward:
-        - {class: File, path: ./data/SRR10903402/forward.fastqsanger, format: http://edamontology.org/format_1931}
+        - {class: File, path: ./data/SRR10903401_forward.fastqsanger.gz, format: http://edamontology.org/format_1931}
+        - {class: File, path: ./data/SRR10903402_forward.fastqsanger, format: http://edamontology.org/format_1931}
+        - {class: File, path: ./data/SRR11059940_forward.fastqsanger.gz, format: http://edamontology.org/format_1931}
+        - {class: File, path: ./data/SRR10971381_forward.fastqsanger.gz, format: http://edamontology.org/format_1931}
+        
 min_length_required: 15
 disable_trim_poly_g: false
 force_polyg_tail_trimming: true

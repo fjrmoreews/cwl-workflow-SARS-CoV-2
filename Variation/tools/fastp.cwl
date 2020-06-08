@@ -99,10 +99,21 @@ outputs:
       type: File
       outputBinding:
         glob: fastp.html
+        outputEval: |
+           ${
+             self[0].basename = inputs.fastq1.nameroot + '_fastp.html';
+             return self[0]
+            }
+        
     json_report:
       type: File
       outputBinding:
         glob: fastp.json
+        outputEval: |
+           ${
+              self[0].basename = inputs.fastq1.nameroot + '_fastp.json';
+              return self[0]
+            }
 
 $namespaces:
   edam: http://edamontology.org/

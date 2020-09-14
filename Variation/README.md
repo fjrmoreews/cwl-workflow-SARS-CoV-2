@@ -18,7 +18,8 @@
 ## Variation
  https://github.com/galaxyproject/SARS-CoV-2/tree/master/genomics/4-Variation
 
-
+* * *
+* * *
 ### Example of the translation process:
 ### FASTP
 

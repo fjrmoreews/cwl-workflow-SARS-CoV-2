@@ -122,7 +122,7 @@ inputs:
 
 baseCommand: [bwa, mem]
 
-stdout: stdout: ${ return inputs.InputFile[1].nameroot+"_unsorted_reads.sam";}
+stdout: ${ return inputs.InputFile[1].nameroot+"_unsorted_reads.sam";}
 
 outputs:
   reads_stdout:
